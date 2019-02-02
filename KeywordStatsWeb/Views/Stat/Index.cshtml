@@ -1,0 +1,65 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Keyword Stats by TCH</title>
+    <link href="~/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
+    <link href="~/Styles/Style.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="navbar navbar-default">
+    <div class="containter-fluid">
+        <div class="navbar-header navbar-default">
+            Keyword stats by TCH
+        </div>
+    </div>
+</div>
+<div id="divContent" class="container">
+    <div class="row max800">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Page url" aria-label="Page url" aria-describedby="btnGetStats" data-bind="value: requestPageUrl">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="btnGetStats" data-bind="click: getStats">Get statistics</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="loader" style="display: none;" data-bind="visible: loading">
+            <img src="Images/ajax-loader.gif" />
+        </div>
+        <div data-bind="visible: !loading()">
+            <div data-bind="visible: error">
+                <span class="error" data-bind="text: error"></span>
+            </div>
+            <div data-bind="visible: !error()">
+                <div class="mar20" style="display: none;" data-bind="visible: pageUrl">
+                    Statistics for page:
+                    <span data-bind="text: pageUrl"></span>
+                </div>
+                <div class="container" data-bind="foreach: keywordStats">
+                    <div class="row">
+                        <div class="col border bg-light" data-bind="text: keyword">
+                        </div>
+                        <div class="col border bg-light" data-bind="text: count">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/node_modules/jquery/dist/jquery.js"></script>
+<script src="~/node_modules/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/node_modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/knockout-3.4.2.js"></script>
+<script src="~/Scripts/Stats.js"></script>
+<script>
+    ko.applyBindings(new StatsVM(), $("#divContent")[0]);
+</script>
+</body>
+</html>
